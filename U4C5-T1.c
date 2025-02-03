@@ -1,18 +1,13 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
-#include "U4C5.h"
+#include "U4C5-T1.h"
 
 int led = 0;
 
 void init_gpio() {
-    gpio_init(LED_VERMELHO);
-    gpio_set_dir(LED_VERMELHO, GPIO_OUT);
-
-    gpio_init(LED_AMARERELO);
-    gpio_set_dir(LED_AMARERELO, GPIO_OUT);
-
-    gpio_init(LED_VERDE);
-    gpio_set_dir(LED_VERDE, GPIO_OUT);
+    uint ledMask = (0x01 << LED_VERMELHO) | (0x01 << LED_AMARERELO) | (0x01 << LED_VERDE);
+    gpio_init_mask(ledMask);
+    gpio_set_dir_out_masked(ledMask);
 }
 
 bool repeat_callback(struct repeating_timer *t) {
